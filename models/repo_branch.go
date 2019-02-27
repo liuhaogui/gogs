@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/Unknwon/com"
-	"github.com/gogits/git-module"
+	"github.com/gogs/git-module"
 
-	"github.com/gogits/gogs/pkg/tool"
+	"github.com/gogs/gogs/pkg/tool"
 )
 
 type Branch struct {

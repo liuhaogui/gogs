@@ -1,5 +1,5 @@
 [target]
-path = github.com/gogits/gogs
+path = github.com/gogs/gogs
 
 [deps]
 github.com/bradfitz/gomemcache = commit:2fafb84
@@ -17,11 +17,11 @@ github.com/go-sql-driver/mysql = commit:2e00b5c
 github.com/go-xorm/builder = commit:9c35786
 github.com/go-xorm/core = commit:7daacb2
 github.com/go-xorm/xorm = commit:19f6dfc
-github.com/gogits/chardet = commit:2404f77
-github.com/gogits/cron = commit:2fc07a4
-github.com/gogits/git-module = commit:1b9552b
-github.com/gogits/go-gogs-client = commit:264a3d5
-github.com/gogits/go-libravatar = commit:cd1abbd
+github.com/gogs/chardet = commit:2404f77
+github.com/gogs/cron = commit:2fc07a4
+github.com/gogs/git-module = commit:1b9552b
+github.com/gogs/go-gogs-client = commit:264a3d5
+github.com/gogs/go-libravatar = commit:cd1abbd
 github.com/issue9/identicon = commit:d36b545
 github.com/jaytaylor/html2text = commit:d16d412
 github.com/kardianos/minwinsvc = commit:cad6b2b

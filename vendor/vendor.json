@@ -172,37 +172,37 @@
 		},
 		{
 			"checksumSHA1": "1ft/4j5MFa7C9dPI9whL03HSUzk=",
-			"path": "github.com/gogits/chardet",
+			"path": "github.com/gogs/chardet",
 			"revision": "2404f777256163ea3eadb273dada5dcb037993c0",
 			"revisionTime": "2015-01-15T10:35:09Z"
 		},
 		{
 			"checksumSHA1": "fswdf/juszifcFH8ghXW6EM2PDs=",
-			"path": "github.com/gogits/cron",
+			"path": "github.com/gogs/cron",
 			"revision": "7f3990acf1833faa5ebd0e86f0a4c72a4b5eba3c",
 			"revisionTime": "2016-08-10T03:50:02Z"
 		},
 		{
 			"checksumSHA1": "baBdY7sA0U60da7wfhIialHmMwU=",
-			"path": "github.com/gogits/git-module",
+			"path": "github.com/gogs/git-module",
 			"revision": "5cc36acd9bc119acc0376a4db452e8ce55451c9f",
 			"revisionTime": "2017-11-16T18:10:54Z"
 		},
 		{
 			"checksumSHA1": "GBfb+meRaVNarQavLB/bzbDoBtY=",
-			"path": "github.com/gogits/go-gogs-client",
+			"path": "github.com/gogs/go-gogs-client",
 			"revision": "bbae6af45f087cf346c09a510412c47e7739b15f",
 			"revisionTime": "2017-06-02T18:25:02Z"
 		},
 		{
 			"checksumSHA1": "p4yoFWgDiTfpu1JYgh26t6+VDTk=",
-			"path": "github.com/gogits/go-libravatar",
+			"path": "github.com/gogs/go-libravatar",
 			"revision": "cd1abbd55d09b793672732a7a1dfdaa12a40dfd0",
 			"revisionTime": "2016-11-20T02:51:54Z"
 		},
 		{
 			"checksumSHA1": "cccKtXG5TiCiCT9JA85slbJokfw=",
-			"path": "github.com/gogits/minwinsvc",
+			"path": "github.com/gogs/minwinsvc",
 			"revision": "95be6356811a6fbd4c2981713236971a3ccbb33a",
 			"revisionTime": "2017-03-01T03:54:11Z"
 		},
@@ -609,5 +609,5 @@
 			"revisionTime": "2014-12-09T11:07:59Z"
 		}
 	],
-	"rootPath": "github.com/gogits/gogs"
+	"rootPath": "github.com/gogs/gogs"
 }
