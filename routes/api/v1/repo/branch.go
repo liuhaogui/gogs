@@ -5,14 +5,15 @@
 package repo
 
 import (
-	api "github.com/gogits/go-gogs-client"
+	api "github.com/gogs/go-gogs-client"
 
-	"github.com/gogits/gogs/models"
-	"github.com/gogits/gogs/pkg/context"
-	"github.com/gogits/gogs/routes/api/v1/convert"
+	"github.com/gogs/gogs/models"
+	"github.com/gogs/gogs/pkg/context"
+	"github.com/gogs/gogs/routes/api/v1/convert"
+	"github.com/gogs/git-module"
 )
 
-// https://github.com/gogits/go-gogs-client/wiki/Repositories#get-branch
+// https://github.com/gogs/go-gogs-client/wiki/Repositories#get-branch
 func GetBranch(c *context.APIContext) {
 	branch, err := c.Repo.Repository.GetBranch(c.Params("*"))
 	if err != nil {
@@ -33,7 +34,7 @@ func GetBranch(c *context.APIContext) {
 	c.JSON(200, convert.ToBranch(branch, commit))
 }
 
-// https://github.com/gogits/go-gogs-client/wiki/Repositories#list-branches
+// https://github.com/gogs/go-gogs-client/wiki/Repositories#list-branches
 func ListBranches(c *context.APIContext) {
 	branches, err := c.Repo.Repository.GetBranches()
 	if err != nil {
@@ -53,3 +54,30 @@ func ListBranches(c *context.APIContext) {
 
 	c.JSON(200, &apiBranches)
 }
+
+func DiffBranch(c *context.Context)  {
+	userName := c.Repo.Owner.Name
+	repoName := c.Repo.Repository.Name
+	c.Repo.Owner.Name = userName
+	c.Repo.Repository.Name = repoName
+	branch1 := c.Params(":branch1")
+	branch2 := c.Params(":branch2")
+
+	if c.Repo.GitRepo == nil {
+		repoPath := models.RepoPath(c.Repo.Owner.Name, c.Repo.Repository.Name)
+		var err error
+		c.Repo.GitRepo, err = git.OpenRepository(repoPath)
+		if err != nil {
+			c.Handle(500, "RepoRef Invalid repo "+repoPath, err)
+			return
+		}
+	}
+
+	res, err := c.Repo.GitRepo.DiffBranch(branch1,branch2)
+	if err != nil{
+		c.JSON(200, res)
+		return
+	}
+	c.JSON(200, res)
+}
+
