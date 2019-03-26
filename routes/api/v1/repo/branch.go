@@ -115,7 +115,6 @@ func DiffBranchList(c *context.Context) {
 			repoPath := models.RepoPath(v.Owner, v.Repo)
 			var err error
 			c.Repo.GitRepo, err = git.OpenRepository(repoPath)
-			fmt.Println("OpenRepository errr ",err)
 			if err != nil {
 				res := git.DiffBranchInfo{
 					Branch1: v.Branch1,
@@ -128,8 +127,6 @@ func DiffBranchList(c *context.Context) {
 			}
 		//}
 		res, err := c.Repo.GitRepo.DiffBranch(v.Branch1, v.Branch2)
-		fmt.Println("DiffBranch errr ",err)
-		fmt.Println("DiffBranch errr ,res = ",res)
 		if err != nil {
 			res.Branch1 = v.Branch1
 			res.Branch2 = v.Branch2

@@ -27,12 +27,7 @@ func GetRawFile(c *context.APIContext) {
 		return
 	}
 
-	fmt.Println("c.Repo.TreePath ", c.Repo.TreePath)
 	blob, err := c.Repo.Commit.GetBlobByPath(c.Repo.TreePath)
-	fmt.Println("blob", blob)
-	j, e := json.Marshal(blob)
-	fmt.Println(string(j))
-	fmt.Println(e)
 	if err != nil {
 		if git.IsErrNotExist(err) {
 			c.Status(404)
