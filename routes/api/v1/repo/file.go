@@ -96,8 +96,8 @@ func GetRawFiles(c *context.APIContext) {
 
 			diffFileInfo.BranchDiffFile = fmt.Sprintf("%s",r2)
 		} else {
-			diffFileInfo.BaseDiffFile = "Binary 文件暂不提供显示"
-			diffFileInfo.BranchDiffFile = "Binary 文件暂不提供显示"
+			diffFileInfo.BaseDiffFile = "[gogs提示]二进制文件暂不提供显示。"
+			diffFileInfo.BranchDiffFile = ""
 		}
 		retrunFileList = append(retrunFileList, diffFileInfo)
 	}
