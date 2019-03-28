@@ -54,7 +54,13 @@ func GetRawFiles(c *context.APIContext) {
 	err := json.Unmarshal([]byte(requestBody), &fileList)
 	if err != nil {
 		fmt.Println(err)
-		//todo
+		diffFileInfo := []api.ReturnDiffFile{
+			api.ReturnDiffFile{
+				ErrorInfo: err.Error(),
+			},
+		}
+		c.JSON(200, diffFileInfo)
+		return
 	}
 
 	for _, v := range fileList {
@@ -63,33 +69,51 @@ func GetRawFiles(c *context.APIContext) {
 		}
 		if v.IsBinary == false {
 			repoPath := models.RepoPath(v.ProjectOwner, v.Project)
-			//todo 容错判断
 			c.Repo.GitRepo, err = git.OpenRepository(repoPath)
-			if err != nil{
-				fmt.Println("GetRawFiles OpenRepository err ",err)
+			if err != nil {
+				fmt.Println("GetRawFiles OpenRepository err ", err)
+				diffFileInfo.ErrorInfo = err.Error()
+				retrunFileList = append(retrunFileList, diffFileInfo)
+				continue
 			}
 			c.Repo.TreePath = v.File
 
 			c.Repo.CommitID = v.BaseDiffBranchCommitID
 			c.Repo.Commit, err = c.Repo.GitRepo.GetCommit(v.BaseDiffBranchCommitID)
+			if err != nil {
+				fmt.Println("c.Repo.GitRepo.GetCommit error ", err)
+				diffFileInfo.ErrorInfo = err.Error()
+				retrunFileList = append(retrunFileList, diffFileInfo)
+				continue
+			}
 			blob, err := c.Repo.Commit.GetBlobByPath(c.Repo.TreePath)
-			if err != nil{
-				fmt.Println("GetBlobByPath err " ,err)
-				diffFileInfo.BaseDiffFile = ""
+			if err != nil {
+				fmt.Println("GetBlobByPath err ", err)
+				diffFileInfo.ErrorInfo = err.Error()
+				retrunFileList = append(retrunFileList, diffFileInfo)
+				continue
 			} else {
 				r, err := blob.Blob().Data()
-				if err != nil{
-					fmt.Println("r, err := blob.Blob().Data() ",err)
+				if err != nil {
+					fmt.Println("r, err := blob.Blob().Data() ", err)
+					diffFileInfo.ErrorInfo = err.Error()
+					retrunFileList = append(retrunFileList, diffFileInfo)
+					continue
 				}
-				diffFileInfo.BaseDiffFile = fmt.Sprintf("%s",r)
+				diffFileInfo.BaseDiffFile = fmt.Sprintf("%s", r)
 			}
 
 			c.Repo.CommitID = v.DeployBranchCommitID
 			c.Repo.Commit, err = c.Repo.GitRepo.GetCommit(v.DeployBranchCommitID)
 			blob2, _ := c.Repo.Commit.GetBlobByPath(c.Repo.TreePath)
-			r2, _ := blob2.Blob().Data()
-
-			diffFileInfo.BranchDiffFile = fmt.Sprintf("%s",r2)
+			r2, err := blob2.Blob().Data()
+			if err != nil{
+				fmt.Println("blob2.Blob().Data() error ", err)
+				diffFileInfo.ErrorInfo = err.Error()
+				retrunFileList = append(retrunFileList, diffFileInfo)
+				continue
+			}
+			diffFileInfo.BranchDiffFile = fmt.Sprintf("%s", r2)
 		} else {
 			diffFileInfo.BaseDiffFile = "[gogs提示]二进制文件暂不提供显示。"
 			diffFileInfo.BranchDiffFile = ""
